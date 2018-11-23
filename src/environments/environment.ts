@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  natter_api_url: 'http://localhost:23000',
+  natter_url: 'http://localhost:22000',
+  whitelisted_domains: ['localhost:23000']
 };
 
 /*

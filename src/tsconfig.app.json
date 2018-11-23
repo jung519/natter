@@ -2,10 +2,19 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "types": []
+    "typeRoots": [
+      "node_modules/@type"
+    ],
+    "types": [
+      "node"
+    ]
   },
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
-  ]
+    "**/*.spec.ts",
+    "server"
+  ],
+  "angularCompilerOptions": {
+    "preserveWhitespaces": true
+  }
 }
