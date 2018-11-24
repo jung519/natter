@@ -19,7 +19,7 @@ export default class SignDao extends SQ {
   getSignPermissionQuery(options: SignAuth): {sql, replacements} {
     const replacements = {};
     const sql = `
-      SELECT u.email, u.user_name, u.create_date, u.introduce, user_class, u.user_status, u.sign_fail_cnt
+      SELECT u.user_number, u.email, u.user_name, u.introduce, user_class, u.user_status, u.sign_fail_cnt
       , (u.password = :password) as pw_conform
       FROM users AS u
       WHERE u.email = :email

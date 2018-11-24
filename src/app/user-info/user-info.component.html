@@ -1,19 +1,65 @@
-<div class="card">
-  <div class="card-body">
-    <div class="h5">@LeeCross</div>
-    <div class="h7 text-muted">Fullname : Miracles Lee Cross</div>
-    <div class="h7">Developer of web applications, JavaScript, PHP, Java, Python, Ruby, Java, Node.js, etc.
+<form #userInfoForm=ngForm>
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="show_hide" class="h5">{{userInfo.user_name}}</div>
+      <input
+        *ngIf="!show_hide"
+        type="text"
+        name="user_name"
+        class="form-control"
+        [(ngModel)]="userInfo.user_name"
+        required
+      >
+      <div class="h7 text-muted">{{userInfo.email}}</div>
+      <div *ngIf="show_hide" class="h7">{{userInfo.introduce}}</div>
+      <textarea
+        *ngIf="!show_hide"
+        type="text"
+        name="introduce"
+        class="form-control"
+        [(ngModel)]="userInfo.introduce"
+      ></textarea>
     </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="h6 text-muted">Followers</div>
+            <div class="h5">{{follow_info.follower_cnt}}</div>
+          </div>
+          <div class="col-md-6">
+            <div class="h6 text-muted">Following</div>
+            <div class="h5">{{follow_info.following_cnt}}</div>
+          </div>
+        </div>
+      </li>
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-md-4">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="setInfo()"
+            >modify</button>
+          </div>
+          <div class="col-md-4">
+            <button
+              *ngIf="!show_hide"
+              type="button"
+              class="btn btn-danger"
+              [disabled]="!userInfoForm.form.valid"
+              (click)="putUserInfo()"
+            >save</button>
+          </div>
+          <div class="col-md-4">
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="signOut()"
+            >sign out</button>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-      <div class="h6 text-muted">Followers</div>
-      <div class="h5">5.2342</div>
-    </li>
-    <li class="list-group-item">
-      <div class="h6 text-muted">Following</div>
-      <div class="h5">6758</div>
-    </li>
-    <li class="list-group-item">Vestibulum at eros</li>
-  </ul>
-</div>
+</form>

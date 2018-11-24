@@ -18,7 +18,7 @@ export class AuthService {
 
   isTokenExpired() {
     const token = localStorage.getItem('access_token');
-    if (token) {
+    if (token && token !== 'undefined') {
       if (!this.jwtHelper.getTokenExpirationDate(token)) {
         return true;
       }
@@ -40,5 +40,10 @@ export class AuthService {
     .pipe(tap(result => {
       return result;
     }));
+  }
+
+  getUserInfo() {
+    const token = localStorage.getItem('access_token');
+    return token ? this.jwtHelper.decodeToken(token) : {};
   }
 }

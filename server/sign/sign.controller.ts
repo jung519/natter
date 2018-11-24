@@ -7,6 +7,9 @@ import SignDao from './sign.dao';
 
 export const signController = Router();
 const signService = new SignService(new SignDao);
+export const tokenSign = (info) => {
+  return  jwt.sign(info, config.jwt.natter.secret, {expiresIn: config.jwt.natter.expiresIn});
+};
 
 // 로그인
 signController.post('/auth/token', (req, res) => {
@@ -18,7 +21,7 @@ signController.post('/auth/token', (req, res) => {
     if (!returnValue) {
       return new NotFound('없는 아이디 입니다.');
     }
-    const token = jwt.sign(returnValue, config.jwt.natter.secret, {expiresIn: config.jwt.natter.expiresIn});
+    const token = tokenSign(returnValue);
     return res.json({token});
   })
   .catch(err => {
@@ -26,6 +29,7 @@ signController.post('/auth/token', (req, res) => {
     return err;
   });
 });
+
 
 
 // 회원가입

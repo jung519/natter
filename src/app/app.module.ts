@@ -22,6 +22,10 @@ import { UserInfoComponent } from './user-info/user-info.component';
 import { WriteComponent } from './write/write.component';
 import { PostComponent } from './post/post.component';
 
+
+// service
+import { UserInfoService } from './user-info/user-info.service';
+
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
@@ -51,7 +55,9 @@ export function tokenGetter() {
     }),
     ToastrModule.forRoot()
   ],
-  // providers: [AuthService],
+  providers: [
+    UserInfoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
