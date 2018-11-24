@@ -18,7 +18,7 @@ export class WriteService {
   }
 
   postWrite(options: Post): Observable<any> {
-    return this.http.post(`/write`, options)
+    return this.http.post(`${this.prefix}/write`, options)
     .pipe(tap(result => {
       return result;
     }));

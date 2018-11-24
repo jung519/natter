@@ -37,7 +37,12 @@ export class WriteComponent implements OnInit {
   postWrite() {
     this.writeServie.postWrite(this.post_info)
     .subscribe(result => {
-      result[0] === 1 ? alert('등록되었습니다.') : alert('오류가 발생하여 등록에 실패 했습니다.');
+      if (result) {
+        alert('등록되었습니다.');
+        this.post_info.content = '';
+      } else {
+        alert('오류가 발생하여 등록에 실패 했습니다.');
+      }
     });
   }
 }
