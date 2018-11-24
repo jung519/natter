@@ -18,3 +18,9 @@ export enum signUpDefaultInfo {
   user_class = 'c01_01', // c01_01: 일반
   user_status = 'c02_01' // c02_01: 사용중
 }
+
+export enum post_status {
+  write = 'c03_01', // c03_01: 일반
+  hide = 'c03_02', // c03_02: 숨김
+  report = 'c03_03' // c03_03: 신고
+}

@@ -1,7 +1,18 @@
 import * as Sequelize from 'sequelize';
 import sequelize from '../sequelize';
+import * as post from '../../common/interfaces/post';
 
-export const Post = sequelize.define('posts', {
+interface PM extends Sequelize.Model<PM, post.Post> {
+  post_number: number;
+  user_number: number;
+  content: string;
+  post_status: string;
+  create_date: Date;
+  update_date?: Date;
+  del_yn: string;
+}
+
+export const Post = sequelize.define<PM, post.Post>('posts', {
   post_number: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
   user_number: {type: Sequelize.INTEGER},
   content: {type: Sequelize.STRING},
