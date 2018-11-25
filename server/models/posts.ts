@@ -19,7 +19,8 @@ export const Post = sequelize.define<PM, post.Post>('posts', {
   post_status: {type: Sequelize.STRING},
   create_date: {type: Sequelize.DATE},
   update_date: {type: Sequelize.DATE},
-  del_yn: {type: Sequelize.STRING}
+  del_yn: {type: Sequelize.STRING},
+  img_number: {type: Sequelize.INTEGER}
 }, {
   classMethods: {},
   tableName: 'posts',

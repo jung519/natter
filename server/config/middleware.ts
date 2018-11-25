@@ -9,7 +9,7 @@ export default class Middleware {
     static init(server: IServer): void {
 
         // express middleware
-        server.app.use(bodyParser.urlencoded({ extended: false }));
+        server.app.use(bodyParser.urlencoded({ extended:  false }));
         server.app.use(bodyParser.json());
         server.app.use(cookieParser());
         server.app.use(compression());

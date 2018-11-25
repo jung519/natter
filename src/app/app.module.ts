@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 // custum module
 import { CoreModule } from './core/core.module';
@@ -38,13 +39,15 @@ export function tokenGetter() {
     NavigationComponent,
     UserInfoComponent,
     WriteComponent,
-    PostComponent
+    PostComponent,
+    FileSelectDirective
   ],
   imports: [
     CoreModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
     JwtModule.forRoot({
