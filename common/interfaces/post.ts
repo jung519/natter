@@ -6,4 +6,6 @@ export interface Post {
   create_date?: Date;
   update_date?: Date;
   del_yn?: string;
+  img_number?: number;
+  img_path?: string;
 }

@@ -17,7 +17,7 @@ export class WriteService {
     this.prefix = `${environment.natter_api_url}/write`;
   }
 
-  postWrite(options: Post): Observable<any> {
+  postWrite(options: FormData): Observable<any> {
     return this.http.post(`${this.prefix}/write`, options)
     .pipe(tap(result => {
       return result;
