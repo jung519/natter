@@ -24,3 +24,9 @@ export enum post_status {
   hide = 'c03_02', // c03_02: 숨김
   report = 'c03_03' // c03_03: 신고
 }
+
+export enum user_status {
+  in_use = 'c02_01', // 사용중
+  secession = 'c02_02', // 탈퇴
+  block = 'c02_03' // 차단
+}

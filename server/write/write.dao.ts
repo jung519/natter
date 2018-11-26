@@ -12,7 +12,7 @@ export default class WriteDao extends SQ {
   }
 
   async postWrite(options: post.Post): Bluebird<any> {
-    return Post.create({
+    return await Post.create({
       content: options.content,
       user_number: options.user_number,
       create_date: new Date(),
@@ -23,7 +23,7 @@ export default class WriteDao extends SQ {
   }
 
   async postFiles(options: files.Files): Bluebird<any> {
-    return Files.create({
+    return await Files.create({
       file_name: options.file_name,
       file_url: options.file_url,
       file_size: options.file_size,
