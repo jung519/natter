@@ -1,4 +1,4 @@
-<div class="card gedf-card">
+<div class="card gedf-card" *ngFor="let item of post_list">
   <div class="card-header">
     <div class="d-flex justify-content-between align-items-center">
       <div class="d-flex justify-content-between align-items-center">
@@ -6,8 +6,8 @@
           <img class="rounded-circle" width="45" src="https://picsum.photos/50/50" alt="">
         </div>
         <div class="ml-2">
-          <div class="h5 m-0">@LeeCross</div>
-          <div class="h7 text-muted">Miracles Lee Cross</div>
+          <div class="h5 m-0">{{item.user_name}}</div>
+          <div class="h7 text-muted">{{item.email}}</div>
         </div>
       </div>
       <div>
@@ -28,20 +28,24 @@
 
   </div>
   <div class="card-body">
-    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>10 min ago</div>
-    <a class="card-link" href="#">
-      <h5 class="card-title">Lorem ipsum dolor sit amet, consectetur adip.</h5>
-    </a>
-
-    <p class="card-text">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo recusandae nulla rem eos ipsa praesentium
-      esse magnam nemo dolor
-      sequi fuga quia quaerat cum, obcaecati hic, molestias minima iste voluptates.
-    </p>
+    <div *ngIf="item.img_url">
+      <img src="item.img_url">
+    </div>
+    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>{{item.create_date}}</div>
+    <p class="card-text">{{item.content}}</p>
   </div>
   <div class="card-footer">
-    <a href="#" class="card-link"><i class="fa fa-gittip"></i> Like</a>
-    <a href="#" class="card-link"><i class="fa fa-comment"></i> Comment</a>
-    <a href="#" class="card-link"><i class="fa fa-mail-forward"></i> Share</a>
+    <a
+      class="card-link"
+      (click)="setLike()"
+    ><i class="fa fa-gittip"></i> Like</a>
   </div>
+</div>
+
+<div class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="1000"
+    [fromRoot]="true"
+    (scrolled)="setPaging()">
 </div>

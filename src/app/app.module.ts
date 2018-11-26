@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { FileSelectDirective } from 'ng2-file-upload';
+import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 // custum module
 import { CoreModule } from './core/core.module';
@@ -40,7 +42,8 @@ export function tokenGetter() {
     UserInfoComponent,
     WriteComponent,
     PostComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    InfiniteScrollDirective
   ],
   imports: [
     CoreModule,
@@ -64,3 +67,5 @@ export function tokenGetter() {
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
