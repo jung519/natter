@@ -11,7 +11,8 @@ interface FollowModel extends Sequelize.Model<FollowModel , follow.Follow> {
 export const Follow = sequelize.define<FollowModel, follow.Follow>('follow', {
   follow_number: {type: Sequelize.INTEGER, autoIncrement: true, primaryKey: true},
   user_number: {type: Sequelize.INTEGER},
-  follow_user_number: {type: Sequelize.INTEGER}
+  follow_user_number: {type: Sequelize.INTEGER},
+  use_yn: {type: Sequelize.STRING}
 }, {
   classMethods: {},
   tableName: 'follow',

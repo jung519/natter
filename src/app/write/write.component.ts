@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { WriteService } from './write.service';
 import { Post } from '../../../common/interfaces/post';
 import { AuthService } from '../core/auth.service';
 import { User } from '../../../common/interfaces/user';
+import { PostComponent } from '../post/post.component';
 
 @Component({
   selector: 'app-write',
@@ -16,11 +17,12 @@ export class WriteComponent implements OnInit {
   imageSrc: any;
   file: any;
   file_name: string;
+  @Output() searchPost = new EventEmitter<string>();
 
   constructor(
     private writeServie: WriteService,
     private auth: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.post_form = this.fb.group({
       avatar: ['', Validators.required]
@@ -44,7 +46,6 @@ export class WriteComponent implements OnInit {
   }
 
   postWrite() {
-    // 이미지가 있다면 업로드 부터 한다.
     const formData = new FormData();
     formData.append('avatar', this.file);
     formData.append('content', this.post_info.content);
@@ -54,6 +55,7 @@ export class WriteComponent implements OnInit {
       .subscribe(result => {
         if (result) {
           alert('등록되었습니다.');
+          this.searchPost.emit('search');
           this.post_info.content = '';
           this.file = null;
           this.imageSrc = null;
@@ -63,6 +65,7 @@ export class WriteComponent implements OnInit {
         }
       });
   }
+
 
   onFileChange(files: FileList) {
     if (files && files.length > 0) {
