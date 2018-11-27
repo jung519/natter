@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UserInfoService } from './user-info.service';
 import { AuthService } from '../core/auth.service';
 import { User } from '../../../common/interfaces/user';
+import { yes_no } from '../../../common/common_enum';
 
 @Component({
   selector: 'app-user-info',
@@ -11,6 +12,11 @@ export class UserInfoComponent implements OnInit {
   userInfo: User;
   show_hide = true;
   follow_info: any;
+  @Output() searchPost = new EventEmitter<string>();
+  yes_no: {
+    yes: yes_no.yes,
+    no: yes_no.no
+  };
 
   constructor(
     private userInfoService: UserInfoService,
@@ -65,6 +71,14 @@ export class UserInfoComponent implements OnInit {
 
   setInfo() {
     this.show_hide ? this.show_hide = false : this.show_hide = true;
+  }
+
+  getMyPost(yn: string) {
+    let user_number: number = null;
+    if (yn === yes_no.yes) {
+      user_number = this.userInfo.user_number;
+    }
+    this.searchPost.emit(String(user_number));
   }
 
 }

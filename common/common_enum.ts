@@ -30,3 +30,7 @@ export enum user_status {
   secession = 'c02_02', // 탈퇴
   block = 'c02_03' // 차단
 }
+
+export enum folderSet {
+  img = '/dist/file/img'
+}
