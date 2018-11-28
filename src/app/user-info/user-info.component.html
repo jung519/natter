@@ -1,7 +1,22 @@
-<form #userInfoForm=ngForm>
+<form #userInfoForm=ngForm (ngSubmit)="putUserInfo()">
   <div class="card">
     <div class="card-body">
-      <div *ngIf="show_hide" class="h5">{{userInfo.user_name}}</div>
+      <div *ngIf="!show_hide">
+        <img *ngIf="imageSrc" [src]="imageSrc" class="rounded-circle" width="45" height="45">
+        <input
+          type="file"
+          (change)="onFileChange($event.target.files)"
+          accept="image/*"
+        >
+      </div>
+      <div class="d-flex" *ngIf="show_hide">
+        <div class="mr-2">
+          <img class="rounded-circle" width="45" [src]="userInfo.profile_img? userInfo.profile_img : default_img" alt="">
+        </div>
+        <div class="ml-2">
+          <div class="h5">{{userInfo.user_name}}</div>
+        </div>
+      </div>
       <input
         *ngIf="!show_hide"
         type="text"
@@ -48,10 +63,9 @@
           <div class="col-md-4">
             <button
               *ngIf="!show_hide"
-              type="button"
+              type="submit"
               class="btn btn-danger"
               [disabled]="!userInfoForm.form.valid"
-              (click)="putUserInfo()"
             >save</button>
           </div>
           <div class="col-md-4">

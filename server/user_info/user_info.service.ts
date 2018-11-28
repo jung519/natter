@@ -2,29 +2,26 @@ import * as Bluebird from 'bluebird';
 import UserInfoDao from './user_info.dao';
 import { User } from '../models/users';
 import * as user from '../../common/interfaces/user';
+import * as files from '../../common/interfaces/files';
 import { tokenSign } from '../sign/sign.controller';
+import Dao from '../../common/common_dao';
 
 export default class UserInfoService {
+  private dao = new Dao;
   constructor(
-    private userInfoDao: UserInfoDao
+    private userInfoDao: UserInfoDao,
   ) {}
 
-  async putUserInfo(options: user.User): Bluebird<any> {
+  async putUserInfo(options: user.User, profile_file: files.Files): Bluebird<any> {
     try {
+      if (profile_file) {
+        const {dataValues: {file_number}} = await this.dao.file_upload(profile_file);
+        Object.assign(options, {file_number: file_number});
+      }
       const updateResult = await this.userInfoDao.putUserInfo(options);
       if (updateResult[0] === 1) {
-        const {dataValues: {user_number, email, user_name, introduce, user_class, user_status, sign_fail_cnt}}
-          = await this.userInfoDao.getUserInfo(options.email);
-        const returnOptions = {
-          user_number: user_number,
-          email: email,
-          user_name: user_name,
-          introduce: introduce,
-          user_class: user_class,
-          user_status: user_status,
-          sign_fail_cnt: sign_fail_cnt
-        };
-        const token =  tokenSign(returnOptions);
+        const user_info: user.User = await this.userInfoDao.getUserInfo(options.user_number);
+        const token =  tokenSign(user_info);
         return {token};
       }
       return updateResult;

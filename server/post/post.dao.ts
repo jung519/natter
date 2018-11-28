@@ -22,10 +22,11 @@ export default class PostDao extends SQ {
     let sql = `
       SELECT p.post_number, p.post_status, p.user_number, u.user_name, u.email, p.content,
             IFNULL(p.update_date, p.create_date) AS create_date, CONCAT('http://localhost:23000/',img.file_name) AS img_url,
-            pl.use_yn AS like_use_yn, f.use_yn AS follow_use_yn
+            pl.use_yn AS like_use_yn, f.use_yn AS follow_use_yn, CONCAT('http://localhost:23000/',user_img.file_name) AS profile_img
       FROM natter.posts AS p
       INNER JOIN  natter.users AS u ON p.user_number = u.user_number
       LEFT JOIN natter.files AS img ON p.img_number = img.file_number
+      LEFT JOIN natter.files AS user_img ON u.img_number = user_img.file_number
       LEFT JOIN (
                   SELECT post_like_number, post_number, use_yn
                   FROM natter.post_like

@@ -16,6 +16,7 @@ export interface Post extends Pagging {
   follow_use_yn?: string;
   sign_in_user_number?: number;
   editFlag?: boolean;
+  profile_img?: string;
 }
 
 export interface PostLike {

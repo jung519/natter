@@ -17,6 +17,7 @@ export class PostComponent implements OnInit {
   user_info: User;
   post_like_info: PostLike;
   follow_info: Follow;
+  default_img = 'http://localhost:23000/default_profile.png';
 
   constructor(
     private postService: PostService,
@@ -34,13 +35,11 @@ export class PostComponent implements OnInit {
   }
 
   getPostList() {
-    console.log(this.user_info);
     this.postService.getPostList(this.post_info, this.user_info.user_number)
     .subscribe(result => {
       for (let i of result) {
         this.post_list.push(i);
       }
-      console.log(this.post_list);
     });
   }
 

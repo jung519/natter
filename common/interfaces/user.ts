@@ -9,6 +9,9 @@ export interface User {
   update_date?: Date;
   introduce?: string;
   sign_fail_cnt?: number;
+  img_number?: number;
+  file_number?: number;
+  profile_img?: string;
 }
 
 export interface SignAuth {
@@ -21,4 +24,5 @@ export interface SignAuth {
   introduce?: string;
   sign_fail_cnt?: number;
   pw_conform?: number;
+  profile_img?: string;
 }
