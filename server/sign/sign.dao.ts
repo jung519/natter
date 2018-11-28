@@ -20,8 +20,9 @@ export default class SignDao extends SQ {
     const replacements = {};
     const sql = `
       SELECT u.user_number, u.email, u.user_name, u.introduce, user_class, u.user_status, u.sign_fail_cnt
-      , (u.password = :password) as pw_conform
+      , (u.password = :password) as pw_conform, CONCAT('http://localhost:23000/', f.file_name) AS profile_img
       FROM users AS u
+      LEFT JOIN natter.files AS f ON u.img_number = f.file_number
       WHERE u.email = :email
       AND u.user_status = '${signUpDefaultInfo.user_status}'
     `;

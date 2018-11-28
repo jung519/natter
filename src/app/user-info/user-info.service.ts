@@ -19,8 +19,8 @@ export class UserInfoService {
     this.prefix = `${environment.natter_api_url}/user_info`;
   }
 
-  putUserInfo(options: User): Observable<any> {
-    return this.http.put(`${this.prefix}/info`, options)
+  putUserInfo(formData: FormData): Observable<any> {
+    return this.http.put(`${this.prefix}/info`, formData)
     .pipe(tap(result => {
       return result;
     }));

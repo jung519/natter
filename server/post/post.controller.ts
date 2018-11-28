@@ -16,7 +16,6 @@ PostController.get('/list', (req, res) => {
   const sign_in_options = {
     user_number: Number(req.param('sign_in_user_number'))
   };
-  console.log(sign_in_options);
   postService.getPostList(options, sign_in_options)
   .then(result => {
     return res.json(result);
@@ -41,7 +40,6 @@ PostController.post('/follow', (req, res) => {
     follow_user_number: Number(req.param('follow_user_number')),
     use_yn: req.param('use_yn')
   };
-  console.log(options);
   postService.setFollow(options)
   .then(result => {
     return res.json(result);

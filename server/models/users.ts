@@ -23,7 +23,8 @@ export const User = sequelize.define<UserModel, user.User>('user', {
   user_status: {type: Sequelize.STRING},
   user_class: {type: Sequelize.STRING},
   sign_fail_cnt: {type: Sequelize.INTEGER},
-  introduce: {type: Sequelize.SMALLINT}
+  introduce: {type: Sequelize.STRING},
+  img_number: {type: Sequelize.INTEGER}
 }, {
   classMethods: {},
   tableName: 'users',
