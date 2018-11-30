@@ -15,7 +15,7 @@ UserInfoController.put(`/info`, commonFn.multer().single('profile'), (req, res) 
     introduce: req.param('introduce'),
     user_number: Number(req.param('user_number'))
   };
-  let profile_file: Files = {};
+  let profile_file: Files = null;
   if (req.file) {
     profile_file = {
       file_name: req.file.filename,

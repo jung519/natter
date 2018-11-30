@@ -11,7 +11,8 @@ PostController.get('/list', (req, res) => {
   const options: Post = {
     page_number: Number(req.param('page_number')) - 1,
     row_cnt: Number(req.param('row_cnt')),
-    user_number: Number(req.param('user_number'))
+    user_number: Number(req.param('user_number')),
+    hashtag: req.param('hashtag')
   };
   const sign_in_options = {
     user_number: Number(req.param('sign_in_user_number'))
