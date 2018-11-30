@@ -44,6 +44,14 @@
     </div>
     <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>{{item.create_date}}</div>
     <p class="card-text">{{item.content}}</p>
+    <div *ngIf="item.hashtag">
+      <span
+        style="margin-left: 3px"
+        class="badge badge-primary" 
+        *ngFor="let tag of item.hashtag_set"
+        (click)="tagSearch(tag)"
+      >{{tag}}</span>&nbsp;
+    </div>
   </div>
   <div class="card-footer" *ngIf="item.user_number !== user_info.user_number" >
     <a

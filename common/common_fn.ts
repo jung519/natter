@@ -3,15 +3,17 @@ import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { folderSet } from './common_enum';
+// import {  } from 'mkdirp';
 
 
 export class CommonFn {
   makeFolderAndNowDate = () => {
     const dateObj = new Date();
-    // const folderPath = __dirname + `/../dist/file/img/${dateObj.getFullYear()}/${dateObj.getMonth() + 1}/${dateObj.getDay()}`;
-    const folderPath = '~/file';
+    const root = path.normalize(`${__dirname}/../`);
+    console.log(root);
+    const folderPath = root + `/public/${dateObj.getFullYear()}/${dateObj.getMonth() + 1}/${dateObj.getDay()}`;
     if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath);
+      // make_dir.
     }
     return folderPath;
   }

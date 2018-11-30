@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Post, PostLike } from '../../../common/interfaces/post';
 import { Follow } from '../../../common/interfaces/follow';
 import { PostService } from './post.service';
@@ -18,6 +18,7 @@ export class PostComponent implements OnInit {
   post_like_info: PostLike;
   follow_info: Follow;
   default_img = 'http://localhost:23000/default_profile.png';
+  @Output() searchTag = new EventEmitter<string>();
 
   constructor(
     private postService: PostService,
@@ -38,8 +39,12 @@ export class PostComponent implements OnInit {
     this.postService.getPostList(this.post_info, this.user_info.user_number)
     .subscribe(result => {
       for (let i of result) {
+        if (i.hashtag) {
+          i.hashtag_set = i.hashtag.split(',');
+        }
         this.post_list.push(i);
       }
+      console.log(result);
     });
   }
 
@@ -74,8 +79,7 @@ export class PostComponent implements OnInit {
 
   getMyPostList(user_number) {
     this.post_info.user_number = user_number;
-    this.post_list = [];
-    this.getPostList();
+    this.getInitPostList();
   }
 
   setLike(post_number: number) {
@@ -134,5 +138,15 @@ export class PostComponent implements OnInit {
         this.getInitPostList();
       });
     }
+  }
+
+  tagSearch(tag) {
+    this.searchTag.emit(tag);
+    this.getSearchTag(tag);
+  }
+
+  getSearchTag(tag) {
+    this.post_info.hashtag = tag;
+    this.getInitPostList();
   }
 }

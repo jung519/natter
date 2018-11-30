@@ -41,27 +41,33 @@ export class WriteComponent implements OnInit {
   initInterface() {
     this.post_info = {
       user_number: this.user_info.user_number,
-      content: ''
+      content: '',
+      hashtag_set: []
     };
+    this.file = null;
+    this.imageSrc = null;
+    this.file_name = '';
   }
 
   postWrite() {
+    this.setHashtag();
     const formData = new FormData();
-    formData.append('avatar', this.file);
-    formData.append('content', this.post_info.content);
-    formData.append('user_number', String(this.user_info.user_number));
+    formData.set('avatar', this.file);
+    formData.set('content', this.post_info.content);
+    formData.set('user_number', String(this.user_info.user_number));
+    this.post_info.hashtag_set.forEach(e => {
+      formData.append('hashtag', e);
+    });
 
     this.writeServie.postWrite(formData)
       .subscribe(result => {
         if (result) {
           alert('등록되었습니다.');
           this.searchPost.emit('search');
-          this.post_info.content = '';
-          this.file = null;
-          this.imageSrc = null;
-          this.file_name = '';
+          this.initInterface();
         } else {
           alert('오류가 발생하여 등록에 실패 했습니다.');
+          this.initInterface();
         }
       });
   }
@@ -92,5 +98,19 @@ export class WriteComponent implements OnInit {
 
   get avatar() {
     return this.post_form.get('avatar');
+  }
+
+  setHashtag() {
+    let contentSet = '';
+    const contentObj = this.post_info.content.replace(/(\r\n|\r|\n|\n\r)/g, ' ').split(' ');
+    contentObj.forEach(result => {
+      let a = result.indexOf('#');
+      if (a === -1) {
+        contentSet += result + ' ';
+      } else {
+        this.post_info.hashtag_set.push(result.replace('#', ''));
+      }
+    });
+    this.post_info.content = contentSet;
   }
 }

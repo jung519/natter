@@ -17,6 +17,8 @@ export interface Post extends Pagging {
   sign_in_user_number?: number;
   editFlag?: boolean;
   profile_img?: string;
+  hashtag_set?: string[];
+  hashtag?: string;
 }
 
 export interface PostLike {

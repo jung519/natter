@@ -1,7 +1,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- nav -->
-<app-navigation></app-navigation>
+<app-navigation (tagEvent)="searchTag($event)"></app-navigation>
 
 <div class="container-fluid gedf-wrapper">
   <div class="row">
@@ -15,7 +15,7 @@
       <app-write (searchPost)="searchPost($event)"></app-write>
 
       <!-- post -->
-      <app-post></app-post>
+      <app-post (searchTag)="setTag($event)"></app-post>
 
     </div>
   </div>

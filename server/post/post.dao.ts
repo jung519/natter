@@ -22,23 +22,34 @@ export default class PostDao extends SQ {
     let sql = `
       SELECT p.post_number, p.post_status, p.user_number, u.user_name, u.email, p.content,
             IFNULL(p.update_date, p.create_date) AS create_date, CONCAT('http://localhost:23000/',img.file_name) AS img_url,
-            pl.use_yn AS like_use_yn, f.use_yn AS follow_use_yn, CONCAT('http://localhost:23000/',user_img.file_name) AS profile_img
+            pl.use_yn AS like_use_yn, f.use_yn AS follow_use_yn, CONCAT('http://localhost:23000/',user_img.file_name) AS profile_img,
+            tag.hashtag
       FROM natter.posts AS p
       INNER JOIN  natter.users AS u ON p.user_number = u.user_number
       LEFT JOIN natter.files AS img ON p.img_number = img.file_number
       LEFT JOIN natter.files AS user_img ON u.img_number = user_img.file_number
+      LEFT JOIN natter.post_like pl on p.post_number = pl.post_number AND pl.user_number = ${sign_in_options.user_number}
+      LEFT JOIN natter.follow AS f on p.user_number = f.follow_user_number AND f.user_number = ${sign_in_options.user_number}`;
+    sql += options.hashtag ? `
+      INNER JOIN (
+        SELECT post_number, GROUP_CONCAT(DISTINCT hash_tag ORDER BY tag_number ASC) AS hashtag
+        FROM natter.hashtag
+        WHERE hash_tag = '${options.hashtag}'
+        GROUP BY post_number
+      ) tag ON p.post_number = tag.post_number
+    ` : `
       LEFT JOIN (
-                  SELECT post_like_number, post_number, use_yn
-                  FROM natter.post_like
-                  WHERE user_number = ${sign_in_options.user_number}
-                ) AS pl ON p.post_number = pl.post_number
-      LEFT JOIN natter.follow AS f on p.user_number = f.follow_user_number AND f.user_number = ${sign_in_options.user_number}
-      WHERE p.del_yn = '${yes_no.no}'
+        SELECT post_number, GROUP_CONCAT(DISTINCT hash_tag ORDER BY tag_number ASC) AS hashtag
+        FROM natter.hashtag
+        GROUP BY post_number
+      ) tag ON p.post_number = tag.post_number
+    `;
+    sql += ` WHERE p.del_yn = '${yes_no.no}'
       AND u.user_status = '${user_status.in_use}'
       AND p.post_status = '${post_status.write}'
       `;
     sql += options.user_number ? ` AND u.user_number = ${options.user_number}` : ``;
-    sql += ` ORDER BY IFNULL(p.update_date, p.create_date) DESC
+    sql += ` ORDER BY p.create_date DESC
       LIMIT ${options.page_number}, ${options.row_cnt}
       `;
 
