@@ -42,7 +42,7 @@
     <div *ngIf="item.img_url">
       <img [src]="item.img_url" height="200">
     </div>
-    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>{{item.create_date}}</div>
+    <div class="text-muted h7 mb-2"> <i class="fa fa-clock-o"></i>{{item.create_date | date:'yyyy/M/d/ HH:mm:ss'}}</div>
     <p class="card-text">{{item.content}}</p>
     <div *ngIf="item.hashtag">
       <span

@@ -46,4 +46,12 @@ export class AuthService {
     const token = localStorage.getItem('access_token');
     return token ? this.jwtHelper.decodeToken(token) : {};
   }
+
+  getCertification() {
+    return this.http.get(`${environment.natter_api_url}/oauth/open_google`)
+    .pipe(tap(result => {
+      console.log(result);
+      return result;
+    }));
+  }
 }
