@@ -35,8 +35,18 @@ export class SignService {
     try {
       const hash_password = crypto.createHash('sha512').update(options.password).digest('base64');
       options.password = hash_password;
-      const result = await this.signDao.addSignUp(options);
+      const {result, created} = await this.signDao.addSignUp(options);
       return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async processSimpleSign(options: SignAuth): Bluebird<any> {
+    try {
+      // 가입된 이메일인지 확인, 가입 안되어 있으면 회원가입
+      const {result, created} = await this.signDao.addSignUp(options);
+      return {result, created};
     } catch (err) {
       throw err;
     }

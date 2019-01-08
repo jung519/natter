@@ -49,7 +49,9 @@ export default class SignDao extends SQ {
 
   async addSignUp(options: SignAuth): Bluebird<any> {
     return await User.findOrCreate({
-      where: {email: options.email},
+      where: {
+        email: options.email
+      },
       defaults: {
         email: options.email,
         user_name: options.user_name,
@@ -61,8 +63,24 @@ export default class SignDao extends SQ {
       }
     })
     .spread((result, created) => {
-      return created;
+      return {result, created};
     });
   }
 
+  async checkSignEmail(options: SignAuth): Bluebird<any> {
+    return await User.findOrCreate({
+      where: {
+        email: options.email
+      },
+      defaults: {
+        email: options.email,
+        password: options.password,
+        user_name: options.user_name
+      }
+    })
+    .spread((result, created) => {
+      console.log('[dao] =', result, created);
+      return {result, created};
+    });
+  }
 }

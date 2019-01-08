@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { SignAuth } from '../../../common/interfaces/user';
 
 @Component({
@@ -18,11 +18,17 @@ export class SignComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.redirect = this.route.snapshot.queryParams['redirect'] || '/';
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        localStorage.setItem('access_token', token);
+        this.router.navigateByUrl(this.redirect);
+      }
+    });
   }
 
   ngOnInit() {
     this.initInterfaceObject();
-    // if (!this.auth.isTokenExpired()) this.router.navigate(['/']);
   }
 
   initInterfaceObject() {
@@ -45,7 +51,10 @@ export class SignComponent implements OnInit {
   }
 
   signWithGoogle() {
-    alert('go! google');
+    this.auth.getCertification()
+    .subscribe(result => {
+      window.location.href = String(result);
+    });
   }
 
   signUp(): void {
