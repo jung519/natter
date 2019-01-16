@@ -75,10 +75,15 @@ signController.get('/oauth/open_google', (req, res) => {
 });
 
 // 구글 oauth redirectUrl
+
+
+
+// dfgfghfghjfghj
+
 signController.get('/oauth/getCode', (req, res) => {
   const code = req.param('code');
   const err = req.param('error');
-  async function getFnToken(code) {
+  async function getFnToken(aode) {
     const {tokens} = await oauthInfo.getToken(code);
     return tokens;
   }
